@@ -1,0 +1,23 @@
+{
+  "name": "uni-app-test",
+  "version": "1.0.0",
+  "description": "study...",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ErXun/uni-app-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ErXun/uni-app-test/issues"
+  },
+  "homepage": "https://github.com/ErXun/uni-app-test#readme",
+  "dependencies": {
+    "@escook/request-miniprogram": "^0.2.1"
+  }
+}
