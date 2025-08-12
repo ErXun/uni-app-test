@@ -112,10 +112,9 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   swiper {
     height: 350rpx;
-
     .swiper-item,
     image {
       height: 100%;
