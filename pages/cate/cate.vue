@@ -1,8 +1,6 @@
 <template>
   <view class="cate-container">
-    <view class="search">
-
-    </view>
+    <my-search @click="onSearch"></my-search>
     <view class="list">
       <scroll-view class="left" scroll-y="true" :style="{height: wHeight + 'px'}">
         <block v-for="(item,index) in cateList" :key="index">
@@ -15,7 +13,7 @@
         <view class="right-item" v-for="(item,index) in secondCateList" :key="index">
           <view class="second-title">/{{item.cat_name}}/</view>
           <view class="third-list">
-            <view class="tl-item" v-for="(j,jIndex) in item.children" @click="handleJump(j)">
+            <view class="tl-item" v-for="(j,jIndex) in item.children" :key="jIndex" @click="handleJump(j)">
               <image :src="j.cat_icon" mode=""></image>
               <view class="ti-name">{{j.cat_name}}</view>
             </view>
@@ -38,12 +36,14 @@
       }
     },
     onLoad() {
-      // uni.getSystemInfoSync() , 获取系统信息
+      // uni.getSystemInfoSync() , 获取系统信息(old)
+      // uni.getWindowInfo()
+      console.log('wx.getWindowInfo', uni.getWindowInfo());
       const {
         windowHeight
       } = uni.getSystemInfoSync()
       if (windowHeight) {
-        this.wHeight = windowHeight
+        this.wHeight = windowHeight - 50
       }
       this.getCateList()
     },
@@ -70,6 +70,12 @@
       handleJump(value) {
         uni.navigateTo({
           url: "/subpkg/goods_list/goods_list?cid=" + value.cat_id
+        })
+      },
+      onSearch(){
+        console.log('----onSearch');
+        uni.navigateTo({
+          url: '/subpkg/search/search'
         })
       }
     }
