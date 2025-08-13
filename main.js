@@ -2,6 +2,8 @@
  * uni-app为了让其在不同的平台上编译不同的代码
   所以使用了C语言中 #ifdef、#ifndef方式来去判断要加载那种vue的代码
  */
+// 1. 导入 store 的实例对象
+import store from './store/store.js'
 
 // #ifndef VUE3
 import Vue from 'vue'
@@ -11,7 +13,8 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 const app = new Vue({
-  ...App
+  ...App,
+   store,
 })
 app.$mount()
 // #endif
@@ -35,8 +38,6 @@ import {
   request
 } from './request'
 request()
-
-
 // 封装提示方法
 uni.$showMsg = (title = "数据请求失败！", duration = 1500, icon = 'none') => {
   uni.showToast({
