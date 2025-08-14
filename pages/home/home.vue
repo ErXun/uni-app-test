@@ -1,5 +1,8 @@
 <template>
   <view>
+    <view class="search-box">
+      <my-search @click="onSearch"></my-search>
+    </view>
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <swiper-item v-for="(item,index) in swiperList" :key="index">
         <navigator class="swiper-item" :url="'/subpkg/goods_detail/goods_detail?goods_id='+ item.goods_id">
@@ -23,7 +26,7 @@
               <image :src="item.product_list[0].image_src" mode="widthFix"></image>
             </navigator>
             <view class="right">
-              <template v-for="(j,jIndex) in item.product_list" :key="jIndex">
+              <template v-for="(j,jIndex) in item.product_list">
                 <navigator class="r-item" v-if="jIndex !== 0" :url="j.url">
                   <image :src="j.image_src" mode=""></image>
                 </navigator>
@@ -37,7 +40,11 @@
 </template>
 
 <script>
+  // 导入自己封装的 mixin 模块
+  import badgeMix from '@/mixins/tabbar-badge.js'
   export default {
+    // 将 badgeMix 混入到当前的页面中进行使用
+    mixins: [badgeMix],
     data() {
       return {
         swiperList: [],
@@ -58,7 +65,6 @@
           } = await uni.$http.get('/api/public/v1/home/swiperdata')
           if (data.meta.status == '200') {
             this.swiperList = data.message
-            // console.log(this.swiperList);
           } else {
             return uni.$showMsg()
           }
@@ -77,7 +83,6 @@
         } catch (error) {}
       },
       handleCateClick(item) {
-        // console.log(item);
         if (item.name == '分类') {
           uni.switchTab({
             url: '/pages/cate/cate'
@@ -97,15 +102,16 @@
               })
             })
             this.floorList = data.message
-            // console.log(this.floorList);
           } else {
             return uni.$showMsg()
           }
         } catch (error) {}
       },
-      handleProduct(j) {
-        // console.log(j, '---j');
-        uni.sw
+      handleProduct(j) {},
+      onSearch() {
+        uni.navigateTo({
+          url: '/subpkg/search/search'
+        })
       }
 
     }
@@ -113,8 +119,15 @@
 </script>
 
 <style lang="scss" scoped>
+  .search-box {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+
   swiper {
     height: 350rpx;
+
     .swiper-item,
     image {
       height: 100%;
